@@ -18,6 +18,10 @@ namespace RealTimeTodo.Web
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureLogging(configure => {
+                    configure.AddFilter("Microsoft.AspNetCore.SignalR", LogLevel.Debug);
+                    configure.AddFilter("Microsoft.AspNetCore.Http.Connections", LogLevel.Debug);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
