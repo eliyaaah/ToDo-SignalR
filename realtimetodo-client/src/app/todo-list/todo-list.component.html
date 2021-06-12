@@ -10,8 +10,8 @@
         <tbody>
             <tr *ngFor="let l of lists">
                 <td><a [routerLink]="['/todo', l.id]" routerLinkActive="active">{{l.name}}</a></td>
-                <td>{{ l.items | completedTaskCount: false }}</td>
-                <td>{{ l.items | completedTaskCount: true }}</td>
+                <td>{{ l.pending }}</td>
+                <td>{{ l.completed }}</td>
             </tr>
         </tbody>
     </table>
