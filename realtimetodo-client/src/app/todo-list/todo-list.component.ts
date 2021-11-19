@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TodoServiceService } from '../todo-service.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { TodoServiceService } from '../todo-service.service';
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.css']
 })
-export class TodoListComponent implements OnInit {
+export class TodoListComponent implements OnInit, OnDestroy {
   lists: any[] = [];
 
   constructor(private todoService: TodoServiceService) { }
@@ -14,9 +14,16 @@ export class TodoListComponent implements OnInit {
   ngOnInit(): void {
     this.todoService.start();
     this.todoService.getLists();
-    this.todoService.events.on("updateToDoList", (values) => {
+    this.todoService.subsribeToCountUpdates();
+    this.todoService.events.on("UpdateToDoList", (values) => {
       this.lists = values.result;
     });
+
+
+  }
+
+  ngOnDestroy() {
+    this.todoService.unsubsribeFromCountUpdates();
   }
 
 }

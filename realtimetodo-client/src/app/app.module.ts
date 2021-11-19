@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
@@ -16,7 +17,8 @@ import { TodoComponent } from './todo/todo.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

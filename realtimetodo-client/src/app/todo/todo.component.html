@@ -1,1 +1,29 @@
-<p>todo works! List id: {{ id }}</p>
+<div>
+    <h1>List: {{ list.name }}</h1>
+    <hr />
+    <table>
+        <thead>
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>Task</th>
+                </tr>
+            </thead>
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of list.items">
+                <td>
+                    <input (change)="toggleToDoItem(i.id)" type="checkbox" [(ngModel)]="i.isCompleted" />
+                </td>
+                <td>{{i.text}}</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <input type="text" [(ngModel)]="newItemText" />
+                    <button (click)="addNewItem()">+</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

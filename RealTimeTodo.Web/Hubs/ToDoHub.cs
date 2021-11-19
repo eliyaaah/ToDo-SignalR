@@ -38,7 +38,7 @@ namespace RealTimeTodo.Web.Hubs
 
         public async Task SubscribeToListUpdates(int listId) {
             var groupName = ListIdToGroupName(listId);
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
         }
 
         public async Task UnubscribeFromListUpdates(int listId) {
@@ -46,7 +46,7 @@ namespace RealTimeTodo.Web.Hubs
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
         }
 
-        public async Task AddToDoList(int listId, string text) {
+        public async Task AddToDoItem(int listId, string text) {
             await _toDoRepository.AddToDoItem(listId, text);
 
             // notify list count updates
@@ -56,7 +56,7 @@ namespace RealTimeTodo.Web.Hubs
             // notify list viewers on update
             var groupName = ListIdToGroupName(listId);
             await Clients.Group("Counts").SendAsync("UpdateToDoList", allLists);
-            await Clients.Group(groupName).SendAsync("UpdatedListData", allLists);
+            await Clients.Group(groupName).SendAsync("UpdatedListData", listUpdate);
         }
         
         public async Task ToggleToDoItem(int listId, int itemId) {
@@ -69,7 +69,7 @@ namespace RealTimeTodo.Web.Hubs
             // notify list viewers on update
             var groupName = ListIdToGroupName(listId);
             await Clients.Group("Counts").SendAsync("UpdateToDoList", allLists);
-            await Clients.Group(groupName).SendAsync("UpdatedListData", allLists);
+            await Clients.Group(groupName).SendAsync("UpdatedListData", listUpdate);
         }
 
         private string ListIdToGroupName(int listId) => $"list-updates-{listId}";
